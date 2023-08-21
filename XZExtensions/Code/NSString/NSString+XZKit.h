@@ -1,0 +1,87 @@
+//
+//  NSString+XZKit.h
+//  XZKit
+//
+//  Created by Xezun on 2021/6/23.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSString (XZKit)
+
+/// 遍历字符串所有符合条件的子串：子串所有字符都在字体 font 存在字形。
+/// @param font 字体。
+/// @param block 符合条件的（最长）子串在字符串中的位置 range 将通过 block 的参数提供。
+- (void)xz_enumerateSubstringsMatchedGlyphInFont:(UIFont *)font usingBlock:(void (^)(NSRange range))block;
+
+/// 字符串转 CGFloat 值。字符串必须是纯数字值，否则返回零。
+/// @code
+/// NSLog(@"%f", @"0.12".xz_CGFloatValue); // 0.12
+/// NSLog(@"%f", @"a.12".xz_CGFloatValue); // 0.00
+/// NSLog(@"%f", @"0.1a".xz_CGFloatValue); // 0.00
+/// @endcode
+@property (nonatomic, readonly) CGFloat xz_floatValue;
+
+/// 字符串转 CGFloat 值。字符串必须是纯数字值，则返回默认值。
+/// @param defaultValue 默认值
+- (CGFloat)xz_floatValue:(CGFloat)defaultValue;
+
+/// 字符串转 NSInteger 值。字符串必须是纯十进制数字值，否则返回零。
+/// @discussion 即使小数也会被认为非法。
+@property (nonatomic, readonly) NSInteger xz_integerValue;
+
+/// 字符串转 NSInteger 值。字符串必须是纯整数数字，否则返回零。
+/// @discussion 即使小数也会被认为非法。
+/// @param defaultValue 默认值
+/// @param base 数值的进制
+- (NSInteger)xz_integerValue:(NSInteger)defaultValue base:(int)base;
+
+/// MD5 摘要，小写字母。
+@property (nonatomic, readonly) NSString *xz_md5;
+
+/// MD5 摘要，大写字母。
+@property (nonatomic, readonly) NSString *xz_MD5;
+
+/// 将字符串中除字母和数字以外的字符，都应用 URI 百分号编码。
+/// @attention 因为不被编码的字符范围较少，因此需考虑新字符串长度增加可能会带来的影响。
+/// @discussion 本方法一般用于构造 JavaScript 代码时，避免特殊字符带来的语义问题。
+@property (nonatomic, readonly) NSString *xz_stringByAddingPercentEncoding;
+/// 与 JavaScript.encodeURI() 函数作用相同。
+/// @discussion 使用 -stringByRemovingPercentEncoding 方法移除 URI 编码。
+/// @discussion 在不清楚 URL 保留字符是否会造成影响的情况下，推荐使用更安全的 -xz_stringByAddingPercentEncoding 方法。
+/// @discussion 本方法一般用于转义 URL 中的非法字符，使 URL 变得可用。
+@property (nonatomic, readonly) NSString *xz_stringByAddingURIEncoding;
+/// 与 JavaScript.encodeURIComponent() 函数作用相同。
+/// @discussion 使用 -stringByRemovingPercentEncoding 方法移除 URI 编码。
+/// @discussion 在不清楚 URL 保留字符是否会造成影响的情况下，推荐使用更安全的 -xz_stringByAddingPercentEncoding 方法。
+/// @discussion 本方法一般用于将字符串拼接到 URL 参数中。
+@property (nonatomic, readonly) NSString *xz_stringByAddingURIComponentEncoding;
+
+@end
+
+/// 将`NSNumber`对象或`纯数字字符串`对象转换为十进制整数，否则返回默认值。
+FOUNDATION_STATIC_INLINE NSInteger XZInteger(id _Nullable aValue, NSInteger defaultValue) {
+    if ( aValue == nil )                       return defaultValue;
+    if ([aValue isKindOfClass:NSNumber.class]) return [(NSNumber *)aValue integerValue];
+    if ([aValue isKindOfClass:NSString.class]) return [(NSString *)aValue xz_integerValue:defaultValue base:10];
+    return defaultValue;
+}
+
+/// 将`NSNumber`对象或`纯数字字符串`对象转换为十进制小数，否则返回默认值。
+FOUNDATION_STATIC_INLINE CGFloat XZFloat(id _Nullable aValue, NSInteger defaultValue) {
+    if ([aValue isKindOfClass:NSNumber.class]) {
+#if CGFLOAT_IS_DOUBLE
+        return [(NSNumber *)aValue doubleValue];
+#else
+        return [(NSNumber *)aValue floatValue];
+#endif
+    }
+    if ([aValue isKindOfClass:NSString.class]) {
+        return [(NSString *)aValue xz_floatValue:defaultValue];
+    }
+    return defaultValue;
+}
+
+NS_ASSUME_NONNULL_END

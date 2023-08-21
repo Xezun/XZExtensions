@@ -1,0 +1,57 @@
+//
+//  UIView+XZKit.h
+//  XZKit
+//
+//  Created by Xezun on 2021/6/22.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+enum {
+    UIViewAutoresizingFlexibleSize = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight,
+    UIViewAutoresizingFlexibleHorizontalMargin = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin,
+    UIViewAutoresizingFlexibleVerticalMargin = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin,
+    UIViewAutoresizingFlexibleMargin = UIViewAutoresizingFlexibleHorizontalMargin | UIViewAutoresizingFlexibleVerticalMargin,
+};
+
+/// @define
+/// 遍历视图层级的块函数。
+/// @param subview 当前被遍历的视图
+/// @param hierarchy 当前被遍历的视图的层级
+/// @param stop 控制是否终止遍历
+/// @returns 返回值“YES/NO”表示“是/否”继续遍历当前被遍历视图的子视图
+typedef BOOL (^XZViewHierarchyEnumerator)(__kindof UIView *subview, NSInteger hierarchy, BOOL *stop);
+
+@interface UIView (XZKit)
+
+/// 遍历当前视图的层级，包括自身。
+/// @code
+/// // 遍历 self.view 的子视图，遍历深度 2 层。
+/// [self.view xz_enumerateHierarchy:^BOOL(UIView *subview, NSInteger hierarchy, BOOL *stop) {
+///     XZPrint(@"%ld: <%@, %p>", hierarchy, NSStringFromClass(subview.class), subview);
+///     return hierarchy < 2;
+/// }];
+/// @endcode
+/// @param enumerator 遍历时执行的块函数
+- (void)xz_enumerateHierarchy:(NS_NOESCAPE XZViewHierarchyEnumerator)enumerator;
+
+@end
+
+@interface UIView (XZDescription)
+
+/// 获取当前视图及所有层级的描述。
+/// @note 字符串格式与 recursiveDescription 类似，但是为了方便查看，仅附带的视图的地址和 frame 信息。
+@property (nonatomic, copy, readonly) NSString *xz_description;
+
+@end
+
+@interface UILabel (XZDescription)
+@end
+
+@interface UIImageView (XZDescription)
+@end
+
+
+NS_ASSUME_NONNULL_END
