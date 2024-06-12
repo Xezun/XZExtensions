@@ -41,6 +41,10 @@
 }
 
 - (UIImage *)xz_imageByBlendingTintColor:(UIColor *)tintColor {
+    if (@available(iOS 13.0, *)) {
+        return [self imageWithTintColor:tintColor];
+    }
+    
     CGImageRef cgImage = self.CGImage;
     if (cgImage == nil) {
         return nil;

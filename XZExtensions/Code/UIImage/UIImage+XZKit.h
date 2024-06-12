@@ -6,8 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <XZExtensions/UIColor+XZKit.h>
-#import <XZDefines/XZDefines.h>
+#import <XZDefines/XZDefer.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 混合。改变图片透明度。
 /// @param alpha 透明度
 /// @return UIImage
-- (nullable UIImage *)xz_imageByBlendingAlpha:(CGFloat)alpha NS_SWIFT_NAME(blendingAlpha(_:));
+- (nullable UIImage *)xz_imageByBlendingAlpha:(CGFloat)alpha NS_SWIFT_NAME(blending(alpha:));
 
 /// 混合，重新渲染图片颜色。
 /// @param tintColor 图片渲染色。
 /// @return 渲染后的图片。
-- (nullable UIImage *)xz_imageByBlendingTintColor:(UIColor *)tintColor NS_SWIFT_NAME(blendingTintColor(_:));
+- (nullable UIImage *)xz_imageByBlendingTintColor:(UIColor *)tintColor NS_SWIFT_NAME(blending(tintColor:));
 
 @end
 
@@ -66,16 +65,6 @@ FOUNDATION_STATIC_INLINE XZImageOutputColorLevel XZImageOutputColorLevelMake(CGF
     return (XZImageOutputColorLevel){shadows, highlights};
 }
 
-/// 图片色阶。
-typedef struct XZImageColorLevels {
-    XZImageInputColorLevel input;
-    XZImageOutputColorLevel output;
-} XZImageColorLevels;
-
-FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inShadows, CGFloat inMidtones, CGFloat inHighlights, CGFloat outShadows, CGFloat outHighlights) {
-    return (XZImageColorLevels){XZImageInputColorLevelMake(inShadows, inMidtones, inHighlights), XZImageOutputColorLevelMake(outShadows, outHighlights)};
-}
-
 /// 颜色通道。
 typedef NS_OPTIONS(NSUInteger, XZImageColorChannels) {
     /// 红色通道。
@@ -92,19 +81,29 @@ typedef NS_OPTIONS(NSUInteger, XZImageColorChannels) {
     XZImageColorChannelRGBA  = XZImageColorChannelRGB | XZImageColorChannelAlpha,
 };
 
+/// 图片色阶。
+typedef struct XZImageColorLevels {
+    XZImageInputColorLevel input;
+    XZImageOutputColorLevel output;
+} XZImageColorLevels;
+
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inShadows, CGFloat inMidtones, CGFloat inHighlights, CGFloat outShadows, CGFloat outHighlights) {
+    return (XZImageColorLevels){XZImageInputColorLevelMake(inShadows, inMidtones, inHighlights), XZImageOutputColorLevelMake(outShadows, outHighlights)};
+}
+
 @interface UIImage (XZKitFiltering)
 
 /// 滤镜。改变图片亮度。
 /// @note 图片处理属于高耗性能的操作。
 /// @param brightness 图片亮度，取值范围 [0, 1.0]，默认 0.5
 /// @return UIImage
-- (nullable UIImage *)xz_imageByFilteringBrightness:(CGFloat)brightness NS_SWIFT_NAME(filteringBrightness(_:));
+- (nullable UIImage *)xz_imageByFilteringBrightness:(CGFloat)brightness NS_SWIFT_NAME(filtering(brightness:));
 
 /// 图片色阶调整。
 /// @see [Adobe Photoshop User Guide - Image adjustments](https://helpx.adobe.com/photoshop/using/levels-adjustment.html)
 /// @param levels 色阶
 /// @param channels 颜色通道
-- (nullable UIImage *)xz_imageByFilteringLevels:(XZImageColorLevels)levels channels:(XZImageColorChannels)channels NS_SWIFT_NAME(filteringLevels(_:channels:));
+- (nullable UIImage *)xz_imageByFilteringLevels:(XZImageColorLevels)levels channels:(XZImageColorChannels)channels NS_SWIFT_NAME(filtering(levels:channels:));
 
 @end
 

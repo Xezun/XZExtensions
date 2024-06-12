@@ -6,7 +6,6 @@
 //
 
 #import "NSData+XZKit.h"
-#import "NSString+XZKit.h"
 
 /// 十六进制字符表。
 static unsigned char const XZHexEncodingTable[2][16] = {
