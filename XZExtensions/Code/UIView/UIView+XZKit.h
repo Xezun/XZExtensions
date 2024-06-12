@@ -37,6 +37,12 @@ typedef BOOL (^XZViewHierarchyEnumerator)(__kindof UIView *subview, NSInteger hi
 /// @param enumerator 遍历时执行的块函数
 - (void)xz_enumerateHierarchy:(NS_NOESCAPE XZViewHierarchyEnumerator)enumerator;
 
+/// 获取当前视图的图片快照。
+///
+/// @param afterUpdates 是否等待视图执行已添加但是未执行的更新。
+/// @return 视图快照图片。
+- (nullable UIImage *)xz_snapshotImageAfterScreenUpdates:(BOOL)afterUpdates NS_SWIFT_NAME(snapshotImage(afterScreenUpdates:));
+
 @end
 
 @interface UIView (XZDescription)

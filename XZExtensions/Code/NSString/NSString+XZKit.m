@@ -115,3 +115,60 @@
 }
 
 @end
+
+
+
+@implementation NSString (XZHexEncoding)
+
+- (NSString *)xz_stringByAddingHexEncoding:(XZHexEncoding)hexEncoding usingEncoding:(NSStringEncoding)stringEncoding {
+    NSData * const data = [self dataUsingEncoding:stringEncoding];
+    return [data xz_hexEncodedString:hexEncoding];
+}
+
+- (NSString *)xz_stringByAddingHexEncodingUsingEncoding:(NSStringEncoding)stringEncoding {
+    return [self xz_stringByAddingHexEncoding:(XZLowercaseHexEncoding) usingEncoding:stringEncoding];
+}
+
+- (NSString *)xz_stringByAddingHexEncoding:(XZHexEncoding)hexEncoding {
+    return [self xz_stringByAddingHexEncoding:hexEncoding usingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)xz_stringByAddingHexEncoding {
+    return [self xz_stringByAddingHexEncoding:(XZLowercaseHexEncoding)];
+}
+
+- (NSString *)xz_stringByRemovingHexEncodingUsingEncoding:(NSStringEncoding)dataEncoding {
+    NSData *data = [NSData xz_dataWithHexEncodedString:self];
+    return [[NSString alloc] initWithData:data encoding:dataEncoding];
+}
+
+- (NSString *)xz_stringByRemovingHexEncoding {
+    return [self xz_stringByRemovingHexEncodingUsingEncoding:NSUTF8StringEncoding];
+}
+
+@end
+
+
+@implementation NSString (XZJSON)
+
++ (instancetype)xz_stringWithJSONObject:(id)object options:(NSJSONWritingOptions)options {
+    NSData *data = [NSData xz_dataWithJSONObject:object options:options];
+    if (data == nil) {
+        return nil;
+    }
+    return [[self alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
++ (instancetype)xz_stringWithJSONObject:(id)object {
+    return [self xz_stringWithJSONObject:object options:(NSJSONWritingFragmentsAllowed)];
+}
+
++ (instancetype)xz_stringWithJSON:(NSData *)json {
+    if (json == nil) {
+        return nil;
+    }
+    NSParameterAssert([json isKindOfClass:NSData.class]);
+    return [[self alloc] initWithData:json encoding:NSUTF8StringEncoding];
+}
+
+@end

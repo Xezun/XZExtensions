@@ -37,6 +37,20 @@
     return NO;
 }
 
+- (UIImage *)xz_snapshotImageAfterScreenUpdates:(BOOL)afterUpdates {
+    CGRect const kBounds = self.bounds;
+    UIGraphicsBeginImageContextWithOptions(kBounds.size, YES, 0);
+    [self drawViewHierarchyInRect:kBounds afterScreenUpdates:afterUpdates];
+    UIImage *snapImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return snapImage;
+}
+
+@end
+
+
+@implementation UIView (XZDescription)
+
 - (NSString *)xz_description {
     NSMutableArray * const descriptionsM = [NSMutableArray array];
     [self xz_enumerateHierarchy:^BOOL(__kindof UIView * _Nonnull subview, NSInteger const hierarchy, BOOL * _Nonnull stop) {

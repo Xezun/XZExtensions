@@ -11,6 +11,7 @@
 #import <XZExtensions/NSAttributedString+XZKit.h>
 #import <XZExtensions/NSBundle+XZKit.h>
 #import <XZExtensions/NSCharacterSet+XZKit.h>
+#import <XZExtensions/NSData+XZKit.h>
 #import <XZExtensions/NSDictionary+XZKit.h>
 #import <XZExtensions/NSIndexSet+XZKit.h>
 #import <XZExtensions/NSObject+XZKit.h>
@@ -20,6 +21,7 @@
 #import <XZExtensions/UIColor+XZKit.h>
 #import <XZExtensions/UIDevice+XZKit.h>
 #import <XZExtensions/UIFont+XZKit.h>
+#import <XZExtensions/UIImage+XZKit.h>
 #import <XZExtensions/UIView+XZKit.h>
 #import <XZExtensions/UIViewController+XZKit.h>
 

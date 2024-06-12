@@ -163,3 +163,36 @@
 }
 
 @end
+
+
+@implementation NSArray (XZJSON)
+
++ (NSArray *)xz_arrayWithJSON:(id const)json options:(NSJSONReadingOptions const)options {
+    if (json == nil) {
+        return nil;
+    }
+    NSParameterAssert([json isKindOfClass:NSString.class] || [json isKindOfClass:NSData.class]);
+    NSData *data = json;
+    if ([json isKindOfClass:NSString.class]) {
+        data = [(NSString *)json dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    if (![data isKindOfClass:NSData.class]) {
+        return nil;
+    }
+    NSError *error = nil;
+    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:options error:&error];
+    if (error.code != noErr) {
+        return nil;
+    }
+    if (![array isKindOfClass:NSArray.class]) {
+        return nil;
+    }
+    return [[self alloc] initWithArray:array];
+}
+
+
++ (instancetype)xz_arrayWithJSON:(id)json {
+    return [self xz_arrayWithJSON:json options:(NSJSONReadingAllowFragments)];
+}
+
+@end

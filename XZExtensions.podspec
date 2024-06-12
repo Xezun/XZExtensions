@@ -10,8 +10,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XZExtensions'
-  s.version          = '1.0.0'
-  s.summary          = 'XZKit 基础部分'
+  s.version          = '1.1.0'
+  s.summary          = '对原生框架的拓展，提高开发效率'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-                       XZExtensions 包含了对原生框架的拓展，丰富了原生框架的功能。
+                       XZExtensions 包含了对原生框架的拓展，丰富了原生框架的功能，提高了开发效率。
                        DESC
 
   s.homepage         = 'https://github.com/Xezun/XZExtensions'
@@ -66,16 +66,18 @@ Pod::Spec.new do |s|
   s.defineSubspec 'NSAttributedString', ["XZExtensions/NSString"];
   s.defineSubspec 'NSBundle',           [];
   s.defineSubspec 'NSCharacterSet',     [];
+  s.defineSubspec 'NSData',             [];
   s.defineSubspec 'NSDictionary',       ["XZExtensions/NSString", "XZExtensions/NSArray"];
   s.defineSubspec 'NSIndexSet',         [];
   s.defineSubspec 'NSObject',           ["XZExtensions/NSArray"];
-  s.defineSubspec 'NSString',           ["XZExtensions/NSCharacterSet"];
+  s.defineSubspec 'NSString',           ["XZExtensions/NSCharacterSet", "XZExtensions/NSData"];
   s.defineSubspec 'UIApplication',      [];
   s.defineSubspec 'UIBezierPath',       [];
   s.defineSubspec 'UIColor',            ["XZDefines/XZMacro"];
   s.defineSubspec 'UIDevice',           ["XZDefines/XZDefer"];
   s.defineSubspec 'UIFont',             ["XZDefines/XZDefer"];
   s.defineSubspec 'UIView',             [];
+  s.defineSubspec 'UIImage',            ["XZDefines/XZDefer"];
   s.defineSubspec 'UIViewController',   ["XZExtensions/UIApplication", "XZDefines/XZRuntime"];
 
 end
