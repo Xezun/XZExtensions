@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <XZExtensions/NSData+XZKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -62,15 +63,16 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 将`NSNumber`对象或`纯数字字符串`对象转换为十进制整数，否则返回默认值。
-FOUNDATION_STATIC_INLINE NSInteger XZInteger(id _Nullable aValue, NSInteger defaultValue) {
+FOUNDATION_STATIC_INLINE NSInteger XZMakeInteger(id _Nullable aValue, NSInteger defaultValue) {
     if ( aValue == nil )                       return defaultValue;
     if ([aValue isKindOfClass:NSNumber.class]) return [(NSNumber *)aValue integerValue];
     if ([aValue isKindOfClass:NSString.class]) return [(NSString *)aValue xz_integerValue:defaultValue base:10];
     return defaultValue;
 }
 
+
 /// 将`NSNumber`对象或`纯数字字符串`对象转换为十进制小数，否则返回默认值。
-FOUNDATION_STATIC_INLINE CGFloat XZFloat(id _Nullable aValue, NSInteger defaultValue) {
+FOUNDATION_STATIC_INLINE CGFloat XZMakeFloat(id _Nullable aValue, NSInteger defaultValue) {
     if ([aValue isKindOfClass:NSNumber.class]) {
 #if CGFLOAT_IS_DOUBLE
         return [(NSNumber *)aValue doubleValue];
@@ -84,4 +86,52 @@ FOUNDATION_STATIC_INLINE CGFloat XZFloat(id _Nullable aValue, NSInteger defaultV
     return defaultValue;
 }
 
+
+
+@interface NSString (XZHexEncoding)
+
+/// 对当前字符串的二进制数据，进行十六进制编码。
+/// @param stringEncoding 字符串二进制形式的编码
+/// @param hexEncoding 十六进制字符的大小写
+- (NSString *)xz_stringByAddingHexEncoding:(XZHexEncoding)hexEncoding usingEncoding:(NSStringEncoding)stringEncoding;
+
+/// 对当前字符串的二进制数据，使用小写字母，进行十六进制编码。
+/// @param stringEncoding 字符串二进制形式的编码
+- (NSString *)xz_stringByAddingHexEncodingUsingEncoding:(NSStringEncoding)stringEncoding;
+
+/// 对当前字符串 UTF-8 编码形式的二进制数据，进行十六进制编码。
+/// @param hexEncoding 十六进制字符的大小写
+- (NSString *)xz_stringByAddingHexEncoding:(XZHexEncoding)hexEncoding;
+
+/// 对当前字符串 UTF-8 编码形式的二进制数据，使用小写字母，进行十六进制编码。
+@property (nonatomic, readonly) NSString *xz_stringByAddingHexEncoding;
+
+/// 对原始字符串的十六进制编码字符串进行解码。
+/// @param dataEncoding 原始字符串的二进制编码
+- (NSString *)xz_stringByRemovingHexEncodingUsingEncoding:(NSStringEncoding)dataEncoding;
+
+/// 对使用 UTF-8 编码的原始字符串的十六进制编码字符串进行解码。
+@property (nonatomic, readonly) NSString *xz_stringByRemovingHexEncoding;
+
+@end
+
+
+@interface NSString (XZJSON)
+
+/// 将对象 object 转换为 JSON 字符串。
+/// @note `JSON`字符串使用`UTF-8`编码。
+/// @param object 可转换为 JSON 的对象
+/// @param options 序列化选项
++ (nullable instancetype)xz_stringWithJSONObject:(nullable id)object options:(NSJSONWritingOptions)options;
+
+/// 将对象 object 转换为 JSON 字符串。
+/// @note `JSON`字符串使用`UTF-8`编码，使用 NSJSONWritingFragmentsAllowed 选项。
+/// @param object 可转换为 JSON 的对象
++ (nullable instancetype)xz_stringWithJSONObject:(nullable id)object;
+
+/// 将二进制形式 JSON 转换为字符串形式。
+/// @param json 二进制形式的`JSON`数据
++ (nullable instancetype)xz_stringWithJSON:(nullable NSData *)json;
+
+@end
 NS_ASSUME_NONNULL_END

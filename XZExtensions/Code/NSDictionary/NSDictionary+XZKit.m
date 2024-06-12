@@ -29,19 +29,19 @@
 }
 
 - (NSInteger)xz_integerValueForKey:(id)aKey defaultValue:(NSInteger)defaultValue {
-    return XZInteger([self objectForKey:aKey], defaultValue);
+    return XZMakeInteger([self objectForKey:aKey], defaultValue);
 }
 
 - (NSInteger)xz_integerValueForKey:(id)aKey {
-    return XZInteger([self objectForKey:aKey], 0);
+    return XZMakeInteger([self objectForKey:aKey], 0);
 }
 
 - (CGFloat)xz_floatValueForKey:(id)aKey defaultValue:(NSInteger)defaultValue {
-    return XZFloat([self objectForKey:aKey], defaultValue);
+    return XZMakeFloat([self objectForKey:aKey], defaultValue);
 }
 
 - (CGFloat)xz_floatValueForKey:(id)aKey {
-    return XZFloat([self objectForKey:aKey], 0);
+    return XZMakeFloat([self objectForKey:aKey], 0);
 }
 
 @end
@@ -58,6 +58,38 @@
     return [keyArray xz_compactMap:^id _Nullable(id  _Nonnull obj, NSInteger idx, BOOL * _Nonnull stop) {
         return [self xz_removeObjectForKey:obj];
     }];
+}
+
+@end
+
+
+@implementation NSDictionary (XZJSON)
+
++ (instancetype)xz_dictionaryWithJSON:(id)json options:(NSJSONReadingOptions)options {
+    if (json == nil) {
+        return nil;
+    }
+    NSParameterAssert([json isKindOfClass:NSString.class] || [json isKindOfClass:NSData.class]);
+    NSData *data = json;
+    if ([json isKindOfClass:NSString.class]) {
+        data = [(NSString *)json dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    if (![data isKindOfClass:NSData.class]) {
+        return nil;
+    }
+    NSError *error = nil;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:options error:&error];
+    if (error.code != noErr) {
+        return nil;
+    }
+    if (![dict isKindOfClass:NSDictionary.class]) {
+        return nil;
+    }
+    return [[self alloc] initWithDictionary:dict];
+}
+
++ (instancetype)xz_dictionaryWithJSON:(id)json {
+    return [self xz_dictionaryWithJSON:json options:(NSJSONReadingAllowFragments)];
 }
 
 @end
