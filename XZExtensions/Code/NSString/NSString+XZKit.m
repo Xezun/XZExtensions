@@ -78,30 +78,6 @@
     return (NSInteger)(ptr == NULL ? value : (ptr[0] == '\0' ? value : defaultValue));
 }
 
-- (NSString *)xz_md5 {
-    const char * const data   = [self UTF8String];
-    CC_LONG      const length = (CC_LONG)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    unsigned char result[16];
-    CC_MD5(data, length, result);
-    return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15] ];
-}
-
-- (NSString *)xz_MD5 {
-    const char * const data   = [self UTF8String];
-    CC_LONG      const length = (CC_LONG)[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    unsigned char result[16];
-    CC_MD5(data, length, result);
-    return [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]];
-}
-
 - (NSString *)xz_stringByAddingPercentEncoding {
     return [self stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.xz_letterAndDigitCharacterSet];
 }

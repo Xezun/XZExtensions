@@ -79,7 +79,6 @@ CAAnimation *ani = [CAAnimation xz_vibrateAnimationWithAmplitudeX:3 y:0 z:0];
 
 1. 查找字体是否包含
 2. 取 integer/float 值
-3. md5 摘要
 4. UIR 编码
 6. 十六进制编码
 7. JSON

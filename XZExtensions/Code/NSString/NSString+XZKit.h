@@ -39,12 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param base 数值的进制
 - (NSInteger)xz_integerValue:(NSInteger)defaultValue base:(int)base;
 
-/// MD5 摘要，小写字母。
-@property (nonatomic, readonly) NSString *xz_md5;
-
-/// MD5 摘要，大写字母。
-@property (nonatomic, readonly) NSString *xz_MD5;
-
 /// 将字符串中除字母和数字以外的字符，都应用 URI 百分号编码。
 /// @attention 因为不被编码的字符范围较少，因此需考虑新字符串长度增加可能会带来的影响。
 /// @discussion 本方法一般用于构造 JavaScript 代码时，避免特殊字符带来的语义问题。
