@@ -37,9 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface UINavigationController (XZKit)
+@property (nonatomic, readonly, nullable) UIViewController *xz_childViewControllerForStatusBarStyle;
+@property (nonatomic, readonly, nullable) UIViewController *xz_childViewControllerForStatusBarHidden;
 @end
 
 @interface UITabBarController (XZKit)
+@property (nonatomic, readonly, nullable) UIViewController *xz_childViewControllerForStatusBarStyle;
+@property (nonatomic, readonly, nullable) UIViewController *xz_childViewControllerForStatusBarHidden;
 @end
 
 NS_ASSUME_NONNULL_END

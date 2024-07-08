@@ -9,12 +9,12 @@
 #import <objc/runtime.h>
 #import "UIApplication+XZKit.h"
 
-#define XZ_STATUS_BAR_HIDDEN_MANAGABLE 0
+#define XZ_STATUS_BAR_MANAGABLE 0
 
 static const void * const _statusBarStyle = &_statusBarStyle;
 static const void * const _statusBarHidden = &_statusBarHidden;
 
-#if XZ_STATUS_BAR_HIDDEN_MANAGABLE
+#if XZ_STATUS_BAR_MANAGABLE
 @protocol XZStatusBarHiddenViewControllerManagable <NSObject>
 + (BOOL)doesOverrideViewControllerMethod:(SEL)sel;
 @end
@@ -22,25 +22,28 @@ static const void * const _statusBarHidden = &_statusBarHidden;
 
 @implementation UIViewController (XZKit)
 
+#if XZ_STATUS_BAR_MANAGABLE
 + (void)load {
-    SEL const sel1 = @selector(preferredStatusBarStyle);
-    SEL const sel2 = @selector(xz_statusBarStyle);
-    xz_objc_class_addMethod(UIViewController.class, sel1, sel2, sel2, sel2);
+    if (self == UIViewController.class) {
+        SEL const sel1 = @selector(preferredStatusBarStyle);
+        SEL const sel2 = @selector(xz_statusBarStyle);
+        xz_objc_class_addMethod(UIViewController.class, sel1, nil, sel2, sel2, sel2);
+        
 
-#if XZ_STATUS_BAR_HIDDEN_MANAGABLE
-    SEL const sel3 = @selector(prefersStatusBarHidden);
-    SEL const sel4 = @selector(xz_statusBarHidden);
-    xz_objc_class_addMethod(UIViewController.class, sel3, sel4, sel4, sel4);
-    
-    // 重写控制 doesOverrideViewControllerMethod: 否则交换后 -prefersStatusBarHidden 不会被访问。
-    // 内部机制应该是：
-    // 1、先访问 -doesOverrideViewControllerMethod: 方法判断控制器是否重写了 -prefersStatusBarHidden 方法；
-    // 2、如果没重写，就走默认内部的逻辑；
-    // 3、重写了才会执行 -prefersStatusBarHidden 方法。
-    Class metaClass = objc_getMetaClass("UIViewController");
-    xz_objc_class_addMethod(metaClass, @selector(doesOverrideViewControllerMethod:), nil, nil, @selector(xz_doesOverrideViewControllerMethod:));
-#endif
+        SEL const sel3 = @selector(prefersStatusBarHidden);
+        SEL const sel4 = @selector(xz_statusBarHidden);
+        xz_objc_class_addMethod(UIViewController.class, sel3, nil, sel4, sel4, sel4);
+        
+        // 重写控制 doesOverrideViewControllerMethod: 否则交换后 -prefersStatusBarHidden 不会被访问。
+        // 内部机制应该是：
+        // 1、先访问 -doesOverrideViewControllerMethod: 方法判断控制器是否重写了 -prefersStatusBarHidden 方法；
+        // 2、如果没重写，就走默认内部的逻辑；
+        // 3、重写了才会执行 -prefersStatusBarHidden 方法。
+        Class metaClass = objc_getMetaClass("UIViewController");
+        xz_objc_class_addMethod(metaClass, @selector(doesOverrideViewControllerMethod:), nil, nil, nil, @selector(xz_doesOverrideViewControllerMethod:));
+    }
 }
+#endif
 
 #pragma mark - 状态栏样式
 
@@ -86,7 +89,7 @@ static const void * const _statusBarHidden = &_statusBarHidden;
 
 #pragma mark - 状态栏显示或隐藏
 
-#if XZ_STATUS_BAR_HIDDEN_MANAGABLE
+#if XZ_STATUS_BAR_MANAGABLE
 + (BOOL)xz_doesOverrideViewControllerMethod:(SEL)method {
     if (method == @selector(prefersStatusBarHidden)) {
         return YES;
@@ -137,18 +140,22 @@ static const void * const _statusBarHidden = &_statusBarHidden;
 
 @implementation UINavigationController (XZKit)
 
+#if XZ_STATUS_BAR_MANAGABLE
 + (void)load {
-    {
-        SEL   const sel1 = @selector(childViewControllerForStatusBarStyle);
-        SEL   const sel2 = @selector(xz_childViewControllerForStatusBarStyle);
-        xz_objc_class_addMethod(UINavigationController.class, sel1, sel2, sel2, sel2);
-    }
-    {
-        SEL   const sel1 = @selector(childViewControllerForStatusBarHidden);
-        SEL   const sel2 = @selector(xz_childViewControllerForStatusBarHidden);
-        xz_objc_class_addMethod(UINavigationController.class, sel1, sel2, sel2, sel2);
+    if (self == UINavigationController.class) {
+        {
+            SEL   const sel1 = @selector(childViewControllerForStatusBarStyle);
+            SEL   const sel2 = @selector(xz_childViewControllerForStatusBarStyle);
+            xz_objc_class_addMethod(UINavigationController.class, sel1, nil, sel2, sel2, sel2);
+        }
+        {
+            SEL   const sel1 = @selector(childViewControllerForStatusBarHidden);
+            SEL   const sel2 = @selector(xz_childViewControllerForStatusBarHidden);
+            xz_objc_class_addMethod(UINavigationController.class, sel1, nil, sel2, sel2, sel2);
+        }
     }
 }
+#endif
 
 - (UIViewController *)xz_childViewControllerForStatusBarStyle {
     return self.topViewController;
@@ -163,18 +170,23 @@ static const void * const _statusBarHidden = &_statusBarHidden;
 
 @implementation UITabBarController (XZKit)
 
+#if XZ_STATUS_BAR_MANAGABLE
 + (void)load {
-    {
-        SEL const sel1 = @selector(childViewControllerForStatusBarStyle);
-        SEL const sel2 = @selector(xz_childViewControllerForStatusBarStyle);
-        xz_objc_class_addMethod(UITabBarController.class, sel1, sel2, sel2, sel2);
-    }
-    {
-        SEL const sel1 = @selector(childViewControllerForStatusBarHidden);
-        SEL const sel2 = @selector(xz_childViewControllerForStatusBarHidden);
-        xz_objc_class_addMethod(UITabBarController.class, sel1, sel2, sel2, sel2);
+    if (self == UITabBarController.class) {
+        {
+            SEL const sel1 = @selector(childViewControllerForStatusBarStyle);
+            SEL const sel2 = @selector(xz_childViewControllerForStatusBarStyle);
+            xz_objc_class_addMethod(UITabBarController.class, sel1, nil, sel2, sel2, sel2);
+        }
+        
+        {
+            SEL const sel1 = @selector(childViewControllerForStatusBarHidden);
+            SEL const sel2 = @selector(xz_childViewControllerForStatusBarHidden);
+            xz_objc_class_addMethod(UITabBarController.class, sel1, nil, sel2, sel2, sel2);
+        }
     }
 }
+#endif
 
 - (UIViewController *)xz_childViewControllerForStatusBarStyle {
     return self.selectedViewController;
