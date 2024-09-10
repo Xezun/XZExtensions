@@ -9,6 +9,26 @@
 @import CoreGraphics;
 @import CoreImage;
 
+@implementation UIImage (XZKit)
+
++ (UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size {
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    defer(^{
+        UIGraphicsEndImageContext();
+    });
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, size.width, size.height));
+    return UIGraphicsGetImageFromCurrentImageContext();
+}
+
++ (UIImage *)xz_imageWithColor:(UIColor *)color {
+    return [self xz_imageWithColor:color size:CGSizeMake(1.0, 1.0)];
+}
+
+@end
+
 @implementation UIImage (XZKitBlending)
 
 #pragma mark - 更改图片的透明度

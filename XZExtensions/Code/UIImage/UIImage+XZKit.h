@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface UIImage (XZKit)
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color NS_SWIFT_NAME(init(_:));
+@end
+
 #pragma mark - 图片颜色混合
 
 @interface UIImage (XZKitBlending)

@@ -13,7 +13,11 @@
     static NSCharacterSet *_URIAllowedCharacterSet = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString * const str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789;,/?:@&=+$-_.!~*'()#";
+        NSString * const str = @""
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ";,/?:@&=+$-_.!~*'()#";
         _URIAllowedCharacterSet = [NSCharacterSet characterSetWithCharactersInString:str];
     });
     return _URIAllowedCharacterSet;
@@ -23,7 +27,11 @@
     static NSCharacterSet *_URIComponentAllowedCharacterSet = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString * const str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789().!~*'-_";
+        NSString * const str = @""
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        "().!~*'-_";
         _URIComponentAllowedCharacterSet = [NSCharacterSet characterSetWithCharactersInString:str];
     });
     return _URIComponentAllowedCharacterSet;
@@ -33,7 +41,10 @@
     static NSCharacterSet *_letterAndDigitCharacterSet = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString * const str = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        NSString * const str = @""
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789";
         _letterAndDigitCharacterSet = [NSCharacterSet characterSetWithCharactersInString:str];
     });
     return _letterAndDigitCharacterSet;
