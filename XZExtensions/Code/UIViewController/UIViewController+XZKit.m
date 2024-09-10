@@ -31,8 +31,7 @@ static const void * const _prefersStatusBarHidden = &_prefersStatusBarHidden;
     }
     objc_setAssociatedObject(aClass, _isStatusBarAppearanceManageable, @(YES), OBJC_ASSOCIATION_COPY_NONATOMIC);
     
-    BOOL isViewControllerBased = UIApplication.xz_isViewControllerBasedStatusBarAppearance;
-    NSAssert(isViewControllerBased, @"必须先配置 Info.plist 中键 UIViewControllerBasedStatusBarAppearance 的值 YES 才能管理开启状态栏。");
+    NSAssert(UIApplication.xz_isViewControllerBasedStatusBarAppearance, @"必须先配置 Info.plist 中键 UIViewControllerBasedStatusBarAppearance 的值 YES 才能管理开启状态栏。");
     
     xz_objc_class_addMethodWithBlock(aClass, @selector(prefersStatusBarHidden), nil, nil, ^BOOL(UIViewController *self) {
         // 如果是重写方法，不调用超类。
