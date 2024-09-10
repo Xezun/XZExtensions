@@ -12,13 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (XZKit)
 
-/// 是否可以通过属性控制状态栏样式。
-/// @note 调用当前页面提供的方法自动开启。
-@property (nonatomic, readonly) BOOL xz_canManageStatusBarAppearance;
-/// 开启控制器管理状态栏。
-/// @note 本方法会在设置属性 `xz_preferredStatusBarStyle`、`xz_prefersStatusBarHidden` 时自动调用。
-/// @returns 返回 YES 表示执行了开启状态栏管理的操作，返回 NO 表示已开启，本次调用未执行任何操作。
-- (BOOL)xz_setManageStatusBarAppearance;
+/// 当前控制器，是否已开启状态栏样式配置能力。
+/// @note 当属性`xz_preferredStatusBarStyle`、`xz_prefersStatusBarHidden`的`setter`方法被调用时，状态栏配置能力自动开启。
+@property (nonatomic, readonly) BOOL xz_prefersStatusBarAppearance;
 
 /// 当前控制器的状态栏样式。
 /// @discussion

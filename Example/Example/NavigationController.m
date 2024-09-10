@@ -17,15 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationBar.barTintColor = UIColor.brownColor;
-    
     UIImage *image = [UIImage xz_imageWithColor:UIColor.brownColor];
-    
     UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
     appearance.backgroundImage = image;
+    appearance.titleTextAttributes = @{ NSForegroundColorAttributeName: UIColor.whiteColor };
     self.navigationBar.standardAppearance = appearance;
     self.navigationBar.scrollEdgeAppearance = appearance;
-    
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
