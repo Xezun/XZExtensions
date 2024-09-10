@@ -82,6 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSArray (XZJSON)
 
 /// 将二进制或字符串形式的 JSON 数据解析为 NSArray 对象。
+/// @note JSON 数据顶层必须为数组。
+/// @note 使用可变容器始构造，则 JSON 数据内的值，也为可变容器。
 /// @param json 待解析的 JSON 数据
 /// @param options 序列化选项
 + (nullable instancetype)xz_arrayWithJSON:(nullable id)json options:(NSJSONReadingOptions)options;
@@ -90,6 +92,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @note 使用`NSJSONReadingAllowFragments`序列化选项。
 /// @param json 待解析的 JSON 数据
 + (nullable instancetype)xz_arrayWithJSON:(nullable id)json;
+
+@end
+
+@interface NSMutableArray (XZJSON)
 
 @end
 

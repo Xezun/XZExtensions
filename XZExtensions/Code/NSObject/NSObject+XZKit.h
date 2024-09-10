@@ -28,8 +28,8 @@ typedef BOOL (^XZKeyPathComparator)(id _Nullable value, NSString *keyPath, BOOL 
 @interface NSObject (XZKit)
 
 /// 遍历对象的路径中的值。
-/// @note 使用 KVC 来获取路径的中间值，并通过 @try-catch 拦截了 KVC 异常。
-/// @note 如果中间值为 NSArray 或 NSSet 集合对象，那么 KVC 执行对象为其内元素，而非集合对象本身。
+/// @note 使用 KVC 来获取路径的中间值，并通过 `@try-catch` 拦截了 KVC 异常。
+/// @note 如果中间值为 `NSArray` 或 `NSSet` 集合对象，那么 KVC 执行对象为其内元素，而非集合对象本身。
 /// @discussion 比如，对于有如下结构的`Table`对象：
 /// @code
 /// @interface Table : NSObject

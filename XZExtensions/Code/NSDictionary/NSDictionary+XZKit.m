@@ -82,14 +82,22 @@
     if (error.code != noErr) {
         return nil;
     }
-    if (![dict isKindOfClass:NSDictionary.class]) {
-        return nil;
+    if ([dict isKindOfClass:NSDictionary.class]) {
+        return dict;
     }
-    return [[self alloc] initWithDictionary:dict];
+    return nil;
 }
 
 + (instancetype)xz_dictionaryWithJSON:(id)json {
     return [self xz_dictionaryWithJSON:json options:(NSJSONReadingAllowFragments)];
+}
+
+@end
+
+@implementation NSMutableDictionary (XZJSON)
+
++ (instancetype)xz_dictionaryWithJSON:(id)json options:(NSJSONReadingOptions)options {
+    return [super xz_dictionaryWithJSON:json options:(options | NSJSONReadingMutableContainers)];
 }
 
 @end

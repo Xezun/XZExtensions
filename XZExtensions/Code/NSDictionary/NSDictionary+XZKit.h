@@ -31,13 +31,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDictionary (XZJSON)
 
-/// 将 JSON 数据（NSData或NSString）解析为 NSDictionary 对象。
-/// @param json 待解析的 JSON 数据或字符串
+/// 将 JSON 数据，`NSData`或`NSString`对象，解析为`NSDictionary`对象。
+/// @note JSON 数据顶层必须为字典。
+/// @note 使用可变容器始构造，则 JSON 数据内的值，也为可变容器。
+/// @param json 待解析的 JSON 数据
 /// @param options 序列化选项
 + (nullable instancetype)xz_dictionaryWithJSON:(nullable id)json options:(NSJSONReadingOptions)options;
-/// 将 JSON 数据（NSData或NSString）解析为 NSDictionary 对象。
-/// @param json 待解析的 JSON 数据或字符串
+/// 将 JSON 数据，`NSData`或`NSString`对象，解析为`NSDictionary`对象。
+/// @param json 待解析的 JSON 数据
 + (nullable instancetype)xz_dictionaryWithJSON:(nullable id)json;
+
+@end
+
+
+@interface NSMutableDictionary (XZJSON)
 
 @end
 

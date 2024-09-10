@@ -33,7 +33,7 @@ typedef struct XZColor {
 
 /// 从字符串中解析颜色 RGBA 值。
 /// @param string 任意字符串
-/// @param color 颜色值通过此参数输出，@b必须不能为空指针
+/// @param color 颜色值通过此参数输出，**必须不能为空指针**
 /// @return 返回 NO 表示字符串不包含颜色值
 UIKIT_EXTERN BOOL XZColorParser(NSString * _Nullable string, XZColor *color);
 
@@ -65,7 +65,7 @@ FOUNDATION_STATIC_INLINE NSString *NSStringFromUIColor(UIColor *color) {
 
 // MARK: - 便利函数
 
-/// 解决命名冲突：
+/// 如何避免命名冲突？
 /// 在引用本头文件前，提前定义宏 XZ_RGBA_COLOR 可屏蔽下面的静态内联函数，避免命名冲突。
 #ifndef XZ_RGBA_COLOR
 #define XZ_RGBA_COLOR

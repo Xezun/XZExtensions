@@ -184,15 +184,23 @@
     if (error.code != noErr) {
         return nil;
     }
-    if (![array isKindOfClass:NSArray.class]) {
-        return nil;
+    if ([array isKindOfClass:NSArray.class]) {
+        return array;
     }
-    return [[self alloc] initWithArray:array];
+    return nil;
 }
 
 
 + (instancetype)xz_arrayWithJSON:(id)json {
     return [self xz_arrayWithJSON:json options:(NSJSONReadingAllowFragments)];
+}
+
+@end
+
+@implementation NSMutableArray (XZJSON)
+
++ (instancetype)xz_arrayWithJSON:(id)json options:(NSJSONReadingOptions)options {
+    return [super xz_arrayWithJSON:json options:(options | NSJSONReadingMutableContainers)];
 }
 
 @end
