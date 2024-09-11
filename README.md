@@ -123,7 +123,12 @@ CAAnimation *ani = [CAAnimation xz_vibrateAnimationWithAmplitudeX:3 y:0 z:0];
 
 1. 状态栏控制
 
+同一页面中，当状态栏需要动态变化时，需要额外定义实例变量来记录状态，但是现在，状态栏的样式可以直接通过属性`xz_prefersStatusBarHidden`和属性`xz_preferredStatusBarStyle`进行配置。
 
+```objc
+self.xz_prefersStatusBarHidden = NO;
+self.xz_preferredStatusBarStyle = UIStatusBarStyleLightContent;
+```
 
 
 
