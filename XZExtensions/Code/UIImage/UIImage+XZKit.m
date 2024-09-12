@@ -116,9 +116,6 @@
 
 @end
 
-XZImageInputColorLevel  const XZImageInputColorLevelIdentity  = {0.0, 1.0, 1.0};
-XZImageOutputColorLevel const XZImageOutputColorLevelIdentity = {0.0, 1.0};
-
 @implementation UIImage (XZKitFiltering)
 
 #pragma mark - 图片亮度
@@ -162,16 +159,16 @@ XZImageOutputColorLevel const XZImageOutputColorLevelIdentity = {0.0, 1.0};
 }
 
 - (UIImage *)xz_imageByFilteringLevels:(XZImageColorLevels)levels channels:(XZImageColorChannels)channels {
-    XZImageInputColorLevel input   = levels.input;
-    XZImageOutputColorLevel output = levels.output;
+    XZImageInputColorLevels input   = levels.input;
+    XZImageOutputColorLevels output = levels.output;
     
     // 检查参数
     input.shadows     = MIN(1.0, MAX(0, input.shadows));
-    input.midtones    = MIN(10.0, MAX(0.0, input.midtones));
-    input.highlights  = MIN(1.0, MAX(MAX(1e-20, input.shadows), input.highlights));
+    input.midtones    = MIN(10.0, MAX(0.01, input.midtones));
+    input.highlights  = MIN(1.0, MAX(input.shadows, input.highlights));
     
     output.shadows    = MIN(1.0, MAX(0, output.shadows));
-    output.highlights = MIN(1.0, MAX(MAX(1e-20, output.shadows), output.highlights));
+    output.highlights = MIN(1.0, MAX(output.shadows, output.highlights));
     
     // 没有要处理的通道，返回自身
     if (channels == 0) {
