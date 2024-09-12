@@ -27,6 +27,31 @@
     return [self xz_imageWithColor:color size:CGSizeMake(1.0, 1.0)];
 }
 
++ (UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius resizable:(BOOL)resizable {
+    CGRect const rect = CGRectMake(0, 0, radius * 2, radius * 2);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    defer(^{
+        UIGraphicsEndImageContext();
+    });
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius];
+    path.lineWidth = 0;
+    [color setFill];
+    [path fill];
+    [path stroke];
+    [path addClip];
+    
+    UIImage * const image = UIGraphicsGetImageFromCurrentImageContext();
+    if (resizable) {
+        return [image resizableImageWithCapInsets:UIEdgeInsetsMake(radius, radius, radius, radius)];
+    }
+    return image;
+}
+
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius {
+    return [self xz_imageWithColor:color radius:radius resizable:NO];
+}
+
 @end
 
 @implementation UIImage (XZKitBlending)

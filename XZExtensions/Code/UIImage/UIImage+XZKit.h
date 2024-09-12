@@ -11,8 +11,25 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (XZKit)
+/// 绘制指定颜色、指定大小的图片。
+/// - Parameters:
+///   - color: 图片颜色
+///   - size: 图片大小
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
+/// 绘制指定颜色的图片。
+/// - Parameter color: 图片颜色
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color NS_SWIFT_NAME(init(_:));
+/// 绘制指定颜色、可拉伸的圆角图片。
+/// - Parameters:
+///   - color: 图片颜色
+///   - radius: 圆角半径
+///   - resizable: 是否可拉伸
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius resizable:(BOOL)resizable NS_SWIFT_NAME(init(_:radius:resizable:));
+/// 绘制指定颜色的圆角图片。
+/// - Parameters:
+///   - color: 图片颜色
+///   - radius: 圆角半径
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius NS_SWIFT_NAME(init(_:radius:));
 @end
 
 #pragma mark - 图片颜色混合
