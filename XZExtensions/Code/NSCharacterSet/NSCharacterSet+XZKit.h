@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// 该字符集包含以下字符：
 ///
-/// `A-Z a-z 0-9 ; , / ? : @ & = + $ - _ . ! ~ * ' ( ) #")`
+/// ```
+/// A-Z a-z 0-9 ; , / ? : @ & = + $ - _ . ! ~ * ' ( ) #")
+/// ```
 ///
 /// - SeeAlso: [JavaScript - encodeURI](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI#description)
 @property (class, readonly) NSCharacterSet *xz_URIAllowedCharacterSet;
@@ -24,14 +26,19 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// 该字符集包含以下字符：
 ///
-/// `A-Z a-z 0-9 - _ . ! ~ * ' ( )`
+/// ```
+/// A-Z a-z 0-9 - _ . ! ~ * ' ( )
+/// ```
 ///
 /// - SeeAlso: [JavaScript - encodeURIComponent](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#description)
 @property (class, readonly) NSCharacterSet *xz_URIComponentAllowedCharacterSet;
 
 /// 由大小写字母和数字组成的字符集。
 ///
-/// 该字符集包含的字符：`A-Z a-z 0-9`
+/// 该字符集包含的字符：
+/// ```
+/// A-Z a-z 0-9
+/// ```
 @property (class, readonly) NSCharacterSet *xz_letterAndDigitCharacterSet;
 
 @end

@@ -56,19 +56,19 @@ typedef BOOL (^XZKeyPathComparator)(id _Nullable value, NSString *keyPath, BOOL 
 ///     @"table.sections.rows.url"
 /// ]];
 /// @endcode
-/// @discussion 另，使用 -xz_mapValues:forKeyPaths: 方法，可以提取所有遍历的对象。
+/// @discussion 另，使用 `-xz_mapValues:forKeyPaths:` 方法，可以提取所有遍历的对象。
 /// @param enumerator 遍历时调用的块函数
 /// @param keyPaths 遍历的路径
 - (void)xz_enumerateValues:(NS_NOESCAPE XZKeyPathEnumerator)enumerator forKeyPaths:(NSArray<NSString *> *)keyPaths;
 
 /// 处理对象的指定路径上的值，并将结果作为集合返回。
-/// @seealso 请参考方法 -xz_enumerateValues:forKeyPaths: 获取更多使用说明。
+/// @seealso 请参考方法 `-xz_enumerateValues:forKeyPaths:` 获取更多使用说明。
 /// @param transformer 收集值的块函数
 /// @param keyPaths 待收集的值在对象中的路径
 - (NSMutableArray *)xz_mapValues:(NS_NOESCAPE XZKeyPathTransformer)transformer forKeyPaths:(NSArray<NSString *> *)keyPaths;
 
 /// 判断对象的路径上是否存在符合指定条件的值。
-/// @seealso 请参考方法 -xz_enumerateValues:forKeyPaths: 获取更多使用说明。
+/// @seealso 请参考方法 `-xz_enumerateValues:forKeyPaths:` 获取更多使用说明。
 /// @note 如果遍历提前终止，则返回块函数 isIncluded 终止时的返回值。
 /// @param isIncluded 判断值
 /// @param keyPaths 值所在的路径

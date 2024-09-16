@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// }];
 /// NSLog(@"%@", sum); // prints 6
 /// @endcode
-/// @param initial 初始值
+/// @param initialValue 初始值
 /// @param next 执行数组元素合并的块函数
-- (nullable id)xz_reduce:(nullable id)initial next:(id _Nullable(^NS_NOESCAPE)(id _Nullable result, ObjectType obj, NSInteger idx, BOOL *stop))next;
+- (nullable id)xz_reduce:(nullable id)initialValue next:(id _Nullable(^NS_NOESCAPE)(id _Nullable result, ObjectType obj, NSInteger idx, BOOL *stop))next;
 
 /// 遍历并将结果返回结果生成新的数组。
 /// @note 生成的新数组元素个数与原数组相同。
