@@ -12,44 +12,34 @@
 @implementation UIImage (XZKit)
 
 + (UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size {
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    defer(^{
-        UIGraphicsEndImageContext();
-    });
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillRect(context, CGRectMake(0, 0, size.width, size.height));
-    return UIGraphicsGetImageFromCurrentImageContext();
+    return [self xz_imageWithGraphics:^(CGContextRef  _Nonnull context) {
+        CGContextSetFillColorWithColor(context, color.CGColor);
+        CGContextFillRect(context, CGRectMake(0, 0, size.width, size.height));
+    } size:size];
 }
 
 + (UIImage *)xz_imageWithColor:(UIColor *)color {
     return [self xz_imageWithColor:color size:CGSizeMake(1.0, 1.0)];
 }
 
-+ (UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius resizable:(BOOL)resizable {
-    CGRect const rect = CGRectMake(0, 0, radius * 2, radius * 2);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius {
+    return [self xz_imageWithGraphics:^(CGContextRef _Nonnull context) {
+        UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(radius, radius) radius:radius startAngle:-M_PI endAngle:+M_PI clockwise:YES];
+        [path closePath];
+        path.lineWidth = 0;
+        [color setFill];
+        [path fill];
+        [path addClip];
+    } size:CGSizeMake(radius * 2.0, radius * 2.0)];
+}
+
++ (UIImage *)xz_imageWithGraphics:(void (^NS_NOESCAPE)(CGContextRef context))imageGraphics size:(CGSize)size {
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
     defer(^{
         UIGraphicsEndImageContext();
     });
-    
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius];
-    path.lineWidth = 0;
-    [color setFill];
-    [path fill];
-    [path stroke];
-    [path addClip];
-    
-    UIImage * const image = UIGraphicsGetImageFromCurrentImageContext();
-    if (resizable) {
-        return [image resizableImageWithCapInsets:UIEdgeInsetsMake(radius, radius, radius, radius)];
-    }
-    return image;
-}
-
-+ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius {
-    return [self xz_imageWithColor:color radius:radius resizable:NO];
+    imageGraphics(UIGraphicsGetCurrentContext());
+    return UIGraphicsGetImageFromCurrentImageContext();
 }
 
 @end

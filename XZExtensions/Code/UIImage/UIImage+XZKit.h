@@ -11,25 +11,29 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (XZKit)
+
 /// 绘制指定颜色、指定大小的图片。
 /// - Parameters:
 ///   - color: 图片颜色
 ///   - size: 图片大小
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
-/// 绘制指定颜色的图片。
+
+/// 绘制指定颜色的图片，图片为长宽 1 像素。
 /// - Parameter color: 图片颜色
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color NS_SWIFT_NAME(init(_:));
-/// 绘制指定颜色、可拉伸的圆角图片。
-/// - Parameters:
-///   - color: 图片颜色
-///   - radius: 圆角半径
-///   - resizable: 是否可拉伸
-+ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius resizable:(BOOL)resizable NS_SWIFT_NAME(init(_:radius:resizable:));
+
 /// 绘制指定颜色的圆角图片。
 /// - Parameters:
 ///   - color: 图片颜色
 ///   - radius: 圆角半径
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius NS_SWIFT_NAME(init(_:radius:));
+
+/// 绘制图片。
+/// - Parameters:
+///   - imageGraphics: 绘制图片
+///   - size: 图片大小
++ (nullable UIImage *)xz_imageWithGraphics:(void (^NS_NOESCAPE)(CGContextRef context))imageGraphics size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
+
 @end
 
 #pragma mark - 图片颜色混合
@@ -102,7 +106,7 @@ typedef struct XZImageColorLevels {
 ///   - inHighlights: 输入高亮色阶
 ///   - outShadows: 输出阴影色阶
 ///   - outHighlights: 高亮色阶输出
-FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights, CGFloat outputShadows, CGFloat outputHighlights) XZATTR_OVERLOAD {
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights, CGFloat outputShadows, CGFloat outputHighlights) XZ_ATTR_OVERLOAD {
     return (XZImageColorLevels){{inputShadows, midtones, inputHighlights}, {outputShadows, outputHighlights}};
 }
 
@@ -111,7 +115,7 @@ FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat input
 ///   - inShadows: 输入阴影色阶
 ///   - inMidtones: 输入中间色阶调
 ///   - inHighlights: 输入高亮色阶
-FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights) XZATTR_OVERLOAD {
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights) XZ_ATTR_OVERLOAD {
     return (XZImageColorLevels){{ inputShadows, midtones, inputHighlights }, { 0, 1.0 }};
 }
 
@@ -119,7 +123,7 @@ FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat input
 /// - Parameters:
 ///   - outShadows: 输出阴影色阶
 ///   - outHighlights: 高亮色阶输出
-FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat outputShadows, CGFloat outputHighlights) XZATTR_OVERLOAD {
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat outputShadows, CGFloat outputHighlights) XZ_ATTR_OVERLOAD {
     return (XZImageColorLevels){{ 0, 1.0, 1.0 }, { outputShadows, outputHighlights }};
 }
 
