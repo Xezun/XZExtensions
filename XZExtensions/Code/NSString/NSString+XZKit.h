@@ -42,17 +42,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 将字符串中除字母和数字以外的字符，都应用 URI 百分号编码。
 /// @attention 因为不被编码的字符范围较少，因此需考虑新字符串长度增加可能会带来的影响。
 /// @discussion 本方法一般用于构造 JavaScript 代码时，避免特殊字符带来的语义问题。
-@property (nonatomic, readonly) NSString *xz_stringByAddingPercentEncoding;
+@property (nonatomic, readonly) NSString *xz_stringByAddingPercentEncoding NS_SWIFT_NAME(addingPercentEncoding);
 /// 与 `JavaScript.encodeURI()` 函数作用相同。
 /// @discussion 使用 `-stringByRemovingPercentEncoding` 方法移除 URI 编码。
 /// @discussion 在不清楚 URL 保留字符是否会造成影响的情况下，推荐使用更安全的 `-xz_stringByAddingPercentEncoding` 方法。
 /// @discussion 本方法一般用于转义 URL 中的非法字符，使 URL 变得可用。
-@property (nonatomic, readonly) NSString *xz_stringByAddingURIEncoding;
+@property (nonatomic, readonly) NSString *xz_stringByAddingURIEncoding NS_SWIFT_NAME(addingURIEncoding);
 /// 与 `JavaScript.encodeURIComponent()` 函数作用相同。
 /// @discussion 使用 `-stringByRemovingPercentEncoding` 方法移除 URI 编码。
 /// @discussion 在不清楚 URL 保留字符是否会造成影响的情况下，推荐使用更安全的 `-xz_stringByAddingPercentEncoding` 方法。
 /// @discussion 本方法一般用于将字符串拼接到 URL 参数中。
-@property (nonatomic, readonly) NSString *xz_stringByAddingURIComponentEncoding;
+@property (nonatomic, readonly) NSString *xz_stringByAddingURIComponentEncoding NS_SWIFT_NAME(addingURIComponentEncoding);
 
 @end
 
@@ -128,4 +128,5 @@ FOUNDATION_STATIC_INLINE CGFloat XZMakeFloat(id _Nullable aValue, NSInteger defa
 + (nullable instancetype)xz_stringWithJSON:(nullable NSData *)json;
 
 @end
+
 NS_ASSUME_NONNULL_END
