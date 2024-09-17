@@ -57,12 +57,12 @@ FOUNDATION_EXPORT BOOL XZHexDecoder(unichar character, UInt8 * const byte) __att
 /// 将对象 object 转换为 JSON 二进制数据。
 /// @param object 可转换为 JSON 的对象
 /// @param options 序列化选项
-+ (nullable instancetype)xz_dataWithJSONObject:(nullable id)object options:(NSJSONWritingOptions)options;
++ (nullable instancetype)xz_dataWithJSONObject:(nullable id)object options:(NSJSONWritingOptions)options NS_SWIFT_NAME(init(JSONObject:options:));
 
 /// 将对象 object 转换为 JSON 数据。
 /// @note 使用 NSJSONWritingFragmentsAllowed 选项。
 /// @param object 可转换为 JSON 的对象
-+ (nullable instancetype)xz_dataWithJSONObject:(nullable id)object;
++ (nullable instancetype)xz_dataWithJSONObject:(nullable id)object NS_SWIFT_NAME(init(JSONObject:));
 
 @end
 

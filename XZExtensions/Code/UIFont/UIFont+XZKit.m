@@ -10,7 +10,7 @@
 
 @implementation UIFont (XZKit)
 
-+ (void)xz_registerFontFromURL:(NSURL *)fontURL error:(NSError *__autoreleasing *)error {
++ (void)xz_registerFontWithURL:(NSURL *)fontURL error:(NSError *__autoreleasing *)error {
     NSData * const data = [NSData dataWithContentsOfURL:fontURL options:0 error:error];
     if (data == nil) {
         return;

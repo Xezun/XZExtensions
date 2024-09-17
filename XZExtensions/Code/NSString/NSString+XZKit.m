@@ -13,7 +13,7 @@
 
 @implementation NSString (XZKit)
 
-- (void)xz_enumerateSubstringsMatchedGlyphInFont:(UIFont *)textFont usingBlock:(void (^)(NSRange range))block {
+- (void)xz_enumerateSubstringsMatchedGlyphOfFont:(UIFont *)textFont usingBlock:(void (^)(NSRange range))block {
     if (block == nil || textFont == nil) {
         return;
     }

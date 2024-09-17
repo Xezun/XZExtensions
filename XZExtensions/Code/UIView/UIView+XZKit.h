@@ -61,7 +61,7 @@ typedef BOOL (^XZViewHierarchyEnumerator)(__kindof UIView *subview, NSInteger hi
 
 /// 获取当前视图及所有层级的描述。
 /// @note 字符串格式与 recursiveDescription 类似，但是为了方便查看，仅附带的视图的地址和 frame 信息。
-@property (nonatomic, copy, readonly) NSString *xz_description;
+@property (nonatomic, copy, readonly) NSString *xz_description NS_SWIFT_NAME(hierarchyDescription);
 
 @end
 

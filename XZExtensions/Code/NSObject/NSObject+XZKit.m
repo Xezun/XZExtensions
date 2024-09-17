@@ -42,7 +42,7 @@ typedef void (^_XZKeyPathEnumerator)(id _Nullable value, NSInteger idx, BOOL *st
     return arrayM;
 }
 
-- (BOOL)xz_contaisValues:(NS_NOESCAPE XZKeyPathComparator)isIncluded forKeyPaths:(NSArray<NSString *> *)keyPaths {
+- (BOOL)xz_containsValues:(NS_NOESCAPE XZKeyPathComparator)isIncluded forKeyPaths:(NSArray<NSString *> *)keyPaths {
     BOOL __block contains = NO;
     [self xz_enumerateValues:^(id  _Nullable value, NSString * _Nonnull keyPath, BOOL * _Nonnull stop) {
         if (isIncluded(value, keyPath, stop)) {
