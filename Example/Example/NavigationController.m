@@ -17,12 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImage *image = [UIImage xz_imageWithColor:UIColor.brownColor];
-    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
-    appearance.backgroundImage = image;
-    appearance.titleTextAttributes = @{ NSForegroundColorAttributeName: UIColor.whiteColor };
-    self.navigationBar.standardAppearance = appearance;
-    self.navigationBar.scrollEdgeAppearance = appearance;
+    UIImage *image = [UIImage xz_imageWithColor:UIColor.orangeColor];
+    if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        appearance.backgroundImage = image;
+        appearance.titleTextAttributes = @{ NSForegroundColorAttributeName: UIColor.whiteColor };
+        self.navigationBar.standardAppearance = appearance;
+        self.navigationBar.scrollEdgeAppearance = appearance;
+    } else {
+        [self.navigationBar setBackgroundImage:image forBarMetrics:(UIBarMetricsDefault)];
+    }
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

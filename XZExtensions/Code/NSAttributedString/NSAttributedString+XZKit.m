@@ -10,12 +10,12 @@
 
 @implementation NSAttributedString (XZKit)
 
-- (NSAttributedString *)xz_attributedStringByAddingFontAttributeForCharatersMatchedGlyphInFont:(UIFont *)font {
+- (NSAttributedString *)xz_attributedStringByAddingFontAttributeForCharatersMatchedGlyphOfFont:(UIFont *)font {
     if (font == nil) {
         return self;
     }
     NSMutableAttributedString *attributedStringM = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    [attributedStringM xz_addFontAttributeForCharatersMatchedGlyphInFont:font];
+    [attributedStringM xz_addFontAttributeForCharatersMatchedGlyphOfFont:font];
     return attributedStringM;
 }
 
@@ -24,11 +24,11 @@
 
 @implementation NSMutableAttributedString (XZKit)
 
-- (void)xz_addFontAttributeForCharatersMatchedGlyphInFont:(UIFont *)font {
+- (void)xz_addFontAttributeForCharatersMatchedGlyphOfFont:(UIFont *)font {
     if (font == nil) {
         return;
     }
-    [self.string xz_enumerateSubstringsMatchedGlyphInFont:font usingBlock:^(NSRange range) {
+    [self.string xz_enumerateSubstringsMatchedGlyphOfFont:font usingBlock:^(NSRange range) {
         [self addAttribute:NSFontAttributeName value:font range:range];
     }];
 }

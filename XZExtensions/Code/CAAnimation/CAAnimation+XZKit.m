@@ -10,10 +10,10 @@
 @implementation CAAnimation (XZKit)
 
 + (CAAnimation *)xz_vibrateAnimation { 
-    return [self xz_vibrateAnimationWithAmplitudeX:3 y:0 z:0];
+    return [self xz_vibrateAnimationWithX:3 y:0 z:0];
 }
 
-+ (CAAnimation *)xz_vibrateAnimationWithAmplitudeX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z {
++ (CAAnimation *)xz_vibrateAnimationWithX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     animation.values = @[
         [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-x, y, z)],

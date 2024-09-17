@@ -9,7 +9,7 @@
 
 @implementation UIColor (XZKit)
 
-- (XZColor)XZColor {
+- (XZColor)xzColor {
     CGFloat r = 0, g = 0, b = 0, a = 0;
     if ([self getRed:&r green:&g blue:&b alpha:&a]) {
         return XZColorMake(round(r * 255), round(g * 255), round(b * 255), round(a * 255));

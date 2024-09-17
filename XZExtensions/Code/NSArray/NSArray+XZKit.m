@@ -22,8 +22,8 @@
     return NO;
 }
 
-- (id)xz_reduce:(id)initial next:(id (^NS_NOESCAPE)(id, id, NSInteger, BOOL *))next {
-    id __block result = initial;
+- (id)xz_reduce:(id)initialValue next:(id (^NS_NOESCAPE)(id, id, NSInteger, BOOL *))next {
+    id __block result = initialValue;
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         result = next(result, obj, idx, stop);
     }];

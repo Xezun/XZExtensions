@@ -11,8 +11,29 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (XZKit)
+
+/// 绘制指定颜色、指定大小的图片。
+/// - Parameters:
+///   - color: 图片颜色
+///   - size: 图片大小
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
+
+/// 绘制指定颜色的图片，图片为长宽 1 像素。
+/// - Parameter color: 图片颜色
 + (nullable UIImage *)xz_imageWithColor:(UIColor *)color NS_SWIFT_NAME(init(_:));
+
+/// 绘制指定颜色的圆角图片。
+/// - Parameters:
+///   - color: 图片颜色
+///   - radius: 圆角半径
++ (nullable UIImage *)xz_imageWithColor:(UIColor *)color radius:(CGFloat)radius NS_SWIFT_NAME(init(_:radius:));
+
+/// 绘制图片。
+/// - Parameters:
+///   - imageGraphics: 绘制图片
+///   - size: 图片大小
++ (nullable UIImage *)xz_imageWithGraphics:(void (^NS_NOESCAPE)(CGContextRef context))imageGraphics size:(CGSize)size NS_SWIFT_NAME(init(_:size:));
+
 @end
 
 #pragma mark - 图片颜色混合
@@ -36,41 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 滤镜
 
-/// 图片色阶输入。
-typedef struct XZImageInputColorLevel {
-    /// 阴影。范围 0 ~ 1.0 ，默认 0 。
-    CGFloat shadows;
-    /// 中间调。范围 0 ~ 9.99 ，默认 1.0 。
-    CGFloat midtones;
-    /// 高光。范围 0 ~ 1.0 ，默认 1.0 。
-    CGFloat highlights;
-} XZImageInputColorLevel NS_SWIFT_NAME(XZImageColorLevels.Input);
-
-/// 图片色阶输入默认值。
-UIKIT_EXTERN XZImageInputColorLevel const XZImageInputColorLevelIdentity NS_SWIFT_NAME(XZImageInputColorLevel.identity);
-
-/// 构造图片色阶输入结构体。
-FOUNDATION_STATIC_INLINE XZImageInputColorLevel XZImageInputColorLevelMake(CGFloat shadows, CGFloat midtones, CGFloat highlights) {
-    return (XZImageInputColorLevel){shadows, midtones, highlights};
-}
-
-/// 图片色阶输出。
-typedef struct XZImageOutputColorLevel {
-    /// 阴影。范围 0 ~ 1.0 ，默认 0 。
-    CGFloat shadows;
-    /// 高光。范围 0 ~ 1.0 ，默认 1.0 。
-    CGFloat highlights;
-} XZImageOutputColorLevel NS_SWIFT_NAME(XZImageColorLevels.Output);
-
-/// 图片色阶输出默认值。
-UIKIT_EXTERN XZImageOutputColorLevel const XZImageOutputColorLevelIdentity NS_SWIFT_NAME(XZImageOutputColorLevel.identity);
-
-/// 构造图片色阶输出结构体。
-FOUNDATION_STATIC_INLINE XZImageOutputColorLevel XZImageOutputColorLevelMake(CGFloat shadows, CGFloat highlights) {
-    return (XZImageOutputColorLevel){shadows, highlights};
-}
-
-/// 颜色通道。
+/// 图片颜色通道。
 typedef NS_OPTIONS(NSUInteger, XZImageColorChannels) {
     /// 红色通道。
     XZImageColorChannelRed   = 1 << 0,
@@ -86,14 +73,58 @@ typedef NS_OPTIONS(NSUInteger, XZImageColorChannels) {
     XZImageColorChannelRGBA  = XZImageColorChannelRGB | XZImageColorChannelAlpha,
 };
 
+/// 图片色阶输入。
+typedef struct XZImageInputColorLevels {
+    /// 输入阴影色阶。范围 0 ~ 1.0 ，默认 0 。
+    CGFloat shadows;
+    /// 输入中间调色阶。范围 0.01 ~ 9.99 ，默认 1.0 。
+    CGFloat midtones;
+    /// 输入高光色阶。范围 0 ~ 1.0 ，默认 1.0 。
+    CGFloat highlights;
+} XZImageInputColorLevels NS_SWIFT_NAME(XZImageColorLevels.Input);
+
+/// 图片色阶输出。
+typedef struct XZImageOutputColorLevels {
+    /// 输出阴影色阶。范围 0 ~ 1.0 ，默认 0 。
+    CGFloat shadows;
+    /// 输出高光色阶。范围 0 ~ 1.0 ，默认 1.0 。
+    CGFloat highlights;
+} XZImageOutputColorLevels NS_SWIFT_NAME(XZImageColorLevels.Output);
+
 /// 图片色阶。
 typedef struct XZImageColorLevels {
-    XZImageInputColorLevel input;
-    XZImageOutputColorLevel output;
+    /// 输入色阶。
+    XZImageInputColorLevels input;
+    /// 输出色阶。
+    XZImageOutputColorLevels output;
 } XZImageColorLevels;
 
-FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inShadows, CGFloat inMidtones, CGFloat inHighlights, CGFloat outShadows, CGFloat outHighlights) {
-    return (XZImageColorLevels){XZImageInputColorLevelMake(inShadows, inMidtones, inHighlights), XZImageOutputColorLevelMake(outShadows, outHighlights)};
+/// 构造图片色阶。
+/// - Parameters:
+///   - inShadows: 输入阴影色阶
+///   - inMidtones: 输入中间色阶调
+///   - inHighlights: 输入高亮色阶
+///   - outShadows: 输出阴影色阶
+///   - outHighlights: 高亮色阶输出
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights, CGFloat outputShadows, CGFloat outputHighlights) XZ_ATTR_OVERLOAD {
+    return (XZImageColorLevels){{inputShadows, midtones, inputHighlights}, {outputShadows, outputHighlights}};
+}
+
+/// 构造图片色阶，仅输入。
+/// - Parameters:
+///   - inShadows: 输入阴影色阶
+///   - inMidtones: 输入中间色阶调
+///   - inHighlights: 输入高亮色阶
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inputShadows, CGFloat midtones, CGFloat inputHighlights) XZ_ATTR_OVERLOAD {
+    return (XZImageColorLevels){{ inputShadows, midtones, inputHighlights }, { 0, 1.0 }};
+}
+
+/// 构造图片色阶，仅输出。
+/// - Parameters:
+///   - outShadows: 输出阴影色阶
+///   - outHighlights: 高亮色阶输出
+FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat outputShadows, CGFloat outputHighlights) XZ_ATTR_OVERLOAD {
+    return (XZImageColorLevels){{ 0, 1.0, 1.0 }, { outputShadows, outputHighlights }};
 }
 
 @interface UIImage (XZKitFiltering)
@@ -105,7 +136,7 @@ FOUNDATION_STATIC_INLINE XZImageColorLevels XZImageColorLevelsMake(CGFloat inSha
 - (nullable UIImage *)xz_imageByFilteringBrightness:(CGFloat)brightness NS_SWIFT_NAME(filtering(brightness:));
 
 /// 图片色阶调整。
-/// @see [Adobe Photoshop User Guide - Image adjustments](https://helpx.adobe.com/photoshop/using/levels-adjustment.html)
+/// @seealso [Adobe Photoshop User Guide - Image adjustments](https://helpx.adobe.com/photoshop/using/levels-adjustment.html)
 /// @param levels 色阶
 /// @param channels 颜色通道
 - (nullable UIImage *)xz_imageByFilteringLevels:(XZImageColorLevels)levels channels:(XZImageColorChannels)channels NS_SWIFT_NAME(filtering(levels:channels:));

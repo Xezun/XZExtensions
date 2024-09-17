@@ -10,10 +10,22 @@
 NS_ASSUME_NONNULL_BEGIN
 
 enum {
-    UIViewAutoresizingFlexibleSize = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight,
-    UIViewAutoresizingFlexibleHorizontalMargin = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin,
-    UIViewAutoresizingFlexibleVerticalMargin = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin,
-    UIViewAutoresizingFlexibleMargin = UIViewAutoresizingFlexibleHorizontalMargin | UIViewAutoresizingFlexibleVerticalMargin,
+    /// 弹性宽高。
+    UIViewAutoresizingFlexibleSize              = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight,
+    /// 弹性左右边距。
+    UIViewAutoresizingFlexibleHorizontalMargin  = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin,
+    /// 弹性上下边距。
+    UIViewAutoresizingFlexibleVerticalMargin    = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin,
+    /// 弹性边距。
+    UIViewAutoresizingFlexibleMargin            = UIViewAutoresizingFlexibleHorizontalMargin | UIViewAutoresizingFlexibleVerticalMargin,
+    /// 弹性上左边距。
+    UIViewAutoresizingFlexibleTopLeftMargin     = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin,
+    /// 弹性上右边距。
+    UIViewAutoresizingFlexibleTopRightMargin    = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin,
+    /// 弹性下左边距。
+    UIViewAutoresizingFlexibleBottomLeftMargin  = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin,
+    /// 弹性下右边距。
+    UIViewAutoresizingFlexibleBottomRightMargin = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin,
 };
 
 /// @define
@@ -35,7 +47,7 @@ typedef BOOL (^XZViewHierarchyEnumerator)(__kindof UIView *subview, NSInteger hi
 /// }];
 /// @endcode
 /// @param enumerator 遍历时执行的块函数
-- (void)xz_enumerateHierarchy:(NS_NOESCAPE XZViewHierarchyEnumerator)enumerator;
+- (void)xz_enumerateHierarchy:(NS_NOESCAPE XZViewHierarchyEnumerator)enumerator NS_SWIFT_NAME(enumerateHierarchy(_:));
 
 /// 获取当前视图的图片快照。
 ///
@@ -49,7 +61,7 @@ typedef BOOL (^XZViewHierarchyEnumerator)(__kindof UIView *subview, NSInteger hi
 
 /// 获取当前视图及所有层级的描述。
 /// @note 字符串格式与 recursiveDescription 类似，但是为了方便查看，仅附带的视图的地址和 frame 信息。
-@property (nonatomic, copy, readonly) NSString *xz_description;
+@property (nonatomic, copy, readonly) NSString *xz_description NS_SWIFT_NAME(hierarchyDescription);
 
 @end
 
