@@ -84,7 +84,11 @@
                     self.xz_preferredStatusBarStyle = UIStatusBarStyleLightContent;
                     break;
                 case 1:
-                    self.xz_preferredStatusBarStyle = UIStatusBarStyleDarkContent;
+                    if (@available(iOS 13.0, *)) {
+                        self.xz_preferredStatusBarStyle = UIStatusBarStyleDarkContent;
+                    } else {
+                        self.xz_preferredStatusBarStyle = UIStatusBarStyleDefault;
+                    }
                     break;
                 default:
                     break;
