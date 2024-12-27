@@ -6,7 +6,7 @@
 //
 
 #import "NSAttributedString+XZKit.h"
-#import "NSString+XZKit.h"
+#import <XZExtensions/NSString+XZKit.h>
 
 @implementation NSAttributedString (XZKit)
 

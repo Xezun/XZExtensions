@@ -6,7 +6,7 @@
 //
 
 #import "UIViewController+XZKit.h"
-#import "UIApplication+XZKit.h"
+#import <XZExtensions/UIApplication+XZKit.h>
 @import ObjectiveC;
 
 static const void * const _prefersStatusBarAppearance = &_prefersStatusBarAppearance;
