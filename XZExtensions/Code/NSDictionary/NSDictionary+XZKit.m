@@ -6,8 +6,8 @@
 //
 
 #import "NSDictionary+XZKit.h"
-#import "NSArray+XZKit.h"
-#import "NSString+XZKit.h"
+#import <XZExtensions/NSArray+XZKit.h>
+#import <XZExtensions/NSString+XZKit.h>
 
 @implementation NSDictionary (XZKit)
 
